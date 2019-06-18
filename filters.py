@@ -101,8 +101,9 @@ while (1):
         elif ch == 3:
             frame = put_moustache(mst, frame, x, y, w, h)
             frame = put_hat(hat, frame, x, y, w, h)
-        else:
-            frame = put_dog_filter(dog, frame, x, y, w, h)
+        elif ch == 4:
+            frame = put_dog_filter(hat, frame, x, y, w, h)
+
 
     if anterior != len(faces):
         anterior = len(faces)
@@ -118,9 +119,9 @@ while (1):
         kernel = np.ones((3, 3), np.uint8)
 
         # define region of interest
-        roi = frame[100:300, 100:300]
+        roi = frame[100:300, 50:250]
 
-        cv2.rectangle(frame, (100, 100), (300, 300), (0, 255, 0), 0)
+        cv2.rectangle(frame, (50, 100), (250, 300), (189, 186, 141), 0)
         hsv = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
 
         # define range of skin color in HSV
@@ -196,44 +197,47 @@ while (1):
 
         # print corresponding gestures which are in their ranges
         font = cv2.FONT_HERSHEY_SIMPLEX
+
+        cv2.putText(frame, '0.none 1.moustache  2.cowboy hat 3.2&3 4.dog', (0, 450), font, 0.6, (189, 186, 141), 1, cv2.LINE_AA)
+
         if l == 1:
             if areacnt < 2000:
-                cv2.putText(frame, 'Put hand in the box', (0, 50), font, 2, (0, 0, 255), 3, cv2.LINE_AA)
+                cv2.putText(frame, 'Put hand in the box!', (0, 50), font, 1.5, (189, 186, 141), 3, cv2.LINE_AA)
             else:
                 if arearatio < 12:
-                    cv2.putText(frame, '0', (0, 50), font, 2, (0, 0, 255), 3, cv2.LINE_AA)
+                    cv2.putText(frame, '0', (145, 50), font, 2, (189, 186, 141), 3, cv2.LINE_AA)
                     ch = 0
                 elif arearatio < 17.5:
-                    cv2.putText(frame, 'Best of luck', (0, 50), font, 2, (0, 0, 255), 3, cv2.LINE_AA)
+                    cv2.putText(frame, 'Best of luck', (0, 50), font, 1.5, (189, 186, 141), 3, cv2.LINE_AA)
 
                 else:
-                    cv2.putText(frame, '1', (0, 50), font, 2, (0, 0, 255), 3, cv2.LINE_AA)
+                    cv2.putText(frame, '1', (140, 50), font, 2, (189, 186, 141), 3, cv2.LINE_AA)
                     ch = 1
 
         elif l == 2:
-            cv2.putText(frame, '2', (0, 50), font, 2, (0, 0, 255), 3, cv2.LINE_AA)
+            cv2.putText(frame, '2', (140, 50), font, 2, (189, 186, 141), 3, cv2.LINE_AA)
             ch = 2
 
         elif l == 3:
 
             if arearatio < 27:
-                cv2.putText(frame, '3', (0, 50), font, 2, (0, 0, 255), 3, cv2.LINE_AA)
+                cv2.putText(frame, '3', (140, 50), font, 2, (189, 186, 141), 3, cv2.LINE_AA)
                 ch = 3
             else:
-                cv2.putText(frame, 'ok', (0, 50), font, 2, (0, 0, 255), 3, cv2.LINE_AA)
+                cv2.putText(frame, 'ok', (140, 50), font, 2, (189, 186, 141), 3, cv2.LINE_AA)
 
         elif l == 4:
-            cv2.putText(frame, '4', (0, 50), font, 2, (0, 0, 255), 3, cv2.LINE_AA)
+            cv2.putText(frame, '4', (140, 50), font, 2, (189, 186, 141), 3, cv2.LINE_AA)
             ch = 4
 
         elif l == 5:
-            cv2.putText(frame, '5', (0, 50), font, 2, (0, 0, 255), 3, cv2.LINE_AA)
+            cv2.putText(frame, '5', (140, 50), font, 2, (189, 186, 141), 3, cv2.LINE_AA)
 
         elif l == 6:
-            cv2.putText(frame, 'reposition', (0, 50), font, 2, (0, 0, 255), 3, cv2.LINE_AA)
+            cv2.putText(frame, 'reposition', (0, 50), font, 2, (189, 186, 141), 3, cv2.LINE_AA)
 
         else:
-            cv2.putText(frame, 'reposition', (10, 50), font, 2, (0, 0, 255), 3, cv2.LINE_AA)
+            cv2.putText(frame, 'reposition', (0, 50), font, 2, (189, 186, 141), 3, cv2.LINE_AA)
 
         # show the windows
         cv2.imshow('mask', mask)
