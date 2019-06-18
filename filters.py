@@ -102,7 +102,7 @@ while (1):
             frame = put_moustache(mst, frame, x, y, w, h)
             frame = put_hat(hat, frame, x, y, w, h)
         elif ch == 4:
-            frame = put_dog_filter(hat, frame, x, y, w, h)
+            frame = put_dog_filter(dog, frame, x, y, w, h)
 
 
     if anterior != len(faces):
