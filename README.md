@@ -1,2 +1,2 @@
-# OpenCV-face-filters
-OpenCV-face-filters with hand detection.
+# openCV-face-filters
+openCV-face-filters with hand detection.
