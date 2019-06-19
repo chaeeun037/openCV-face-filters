@@ -24,11 +24,14 @@ mst = cv2.imread('moustache.png')
 hat = cv2.imread('cowboy_hat.png')
 dogFilter = cv2.imread('dog_filter.png')
 
-cat = cv2.imread('cat.png', 1)
-ironman = cv2.imread('ironman.png', 1)
-spiderman = cv2.imread('spiderman.png', 1)
-glasses = cv2.imread('glasses.png', 1)
-dog = cv2.imread('dog.png', 1)
+cat_e = cv2.imread('cat_e.jpg')
+dog_e = cv2.imread('dog_e.jpg')
+cat_n = cv2.imread('cat_n.jpg')
+dog_n = cv2.imread('dog_n.jpg')
+spiderman = cv2.imread('spiderman.jpg')
+glasses = cv2.imread('glasses.jpg')
+hearts = cv2.imread('hearts.jpg')
+
 
 def put_moustache(mst, fc, x, y, w, h):
     face_width = w
@@ -89,52 +92,106 @@ def put_dog_filter(dog, fc, x, y, w, h):
                     fc[y + i - int(0.375 * h) - 1][x + j - int(0.25 * w)][k] = dog[i][j][k]
     return fc
 
-def put_cat_filter(cat, fc, x, y, w, h):
+def put_cat_e_filter(cat_e, fc, x, y, w, h):
     face_width = w
     face_height = h
 
-    cat = cv2.resize(cat, (int(face_width * 1.5), int(face_height * 1.75)))
-    for i in range(int(face_height * 1.75)):
-        for j in range(int(face_width * 1.5)):
+    cat_e_width = face_width + 1
+    cat_e_height = int(0.35 * face_height) + 1
+
+    cat_e = cv2.resize(cat_e, (cat_e_width, cat_e_height))
+
+    for i in range(cat_e_height):
+        for j in range(cat_e_width):
             for k in range(3):
-                if cat[i][j][k] < 235:
-                    fc[y + i - int(0.375 * h) - 1][x + j - int(0.25 * w)][k] = cat[i][j][k]
+                if cat_e[i][j][k] < 235:
+                    fc[y + i - int(0.25 * face_height)][x + j][k] = cat_e[i][j][k]
+    return fc
+
+def put_dog_e_filter(dog_e, fc, x, y, w, h):
+    face_width = w
+    face_height = h
+
+    dog_e_width = face_width + 1
+    dog_e_height = int(0.35 * face_height) + 1
+
+    dog_e = cv2.resize(dog_e, (dog_e_width, dog_e_height))
+
+    for i in range(dog_e_height):
+        for j in range(dog_e_width):
+            for k in range(3):
+                if dog_e[i][j][k] < 235:
+                    fc[y + i - int(0.25 * face_height)][x + j][k] = dog_e[i][j][k]
+    return fc
+
+def put_cat_n_filter(cat_n, fc, x, y, w, h):
+    face_width = w
+    face_height = h
+
+    cat_n_width = int(face_width * 0.4166666) + 1
+    cat_n_height = int(face_height * 0.142857) + 1
+
+    cat_n = cv2.resize(cat_n, (cat_n_width, cat_n_height))
+
+    for i in range(int(0.62857142857 * face_height), int(0.62857142857 * face_height) + cat_n_height):
+        for j in range(int(0.29166666666 * face_width), int(0.29166666666 * face_width) + cat_n_width):
+            for k in range(3):
+                if cat_n[i - int(0.62857142857 * face_height)][j - int(0.29166666666 * face_width)][k] < 235:
+                    fc[y + i][x + j][k] = \
+                        cat_n[i - int(0.62857142857 * face_height)][j - int(0.29166666666 * face_width)][k]
+    return fc
+
+def put_dog_n_filter(dog_n, fc, x, y, w, h):
+    face_width = w
+    face_height = h
+
+    dog_n_width = int(face_width * 0.4166666) + 1
+    dog_n_height = int(face_height * 0.3) + 1
+
+    dog_n = cv2.resize(dog_n, (dog_n_width, dog_n_height))
+
+    for i in range(int(0.62857142857 * face_height), int(0.62857142857 * face_height) + dog_n_height):
+        for j in range(int(0.29166666666 * face_width), int(0.29166666666 * face_width) + dog_n_width):
+            for k in range(3):
+                if dog_n[i - int(0.62857142857 * face_height)][j - int(0.29166666666 * face_width)][k] < 235:
+                    fc[y + i][x + j][k] = \
+                        dog_n[i - int(0.62857142857 * face_height)][j - int(0.29166666666 * face_width)][k]
     return fc
 
 def put_spiderman_filter(spiderman, fc, x, y, w, h):
     face_width = w
     face_height = h
 
-    spiderman = cv2.resize(spiderman, (int(face_width * 1.5), int(face_height * 1.75)))
-    for i in range(int(face_height * 1.75)):
-        for j in range(int(face_width * 1.5)):
+    spiderman = cv2.resize(spiderman, (int(face_width * 0.9), int(face_height * 1.4)))
+    for i in range(int(face_height * 1.4)):
+        for j in range(int(face_width * 0.9)):
             for k in range(3):
                 if spiderman[i][j][k] < 235:
-                    fc[y + i - int(0.375 * h) - 1][x + j - int(0.25 * w)][k] = spiderman[i][j][k]
-    return fc
-
-def put_ironman_filter(ironman, fc, x, y, w, h):
-    face_width = w
-    face_height = h
-
-    ironman = cv2.resize(ironman, (int(face_width * 1.5), int(face_height * 1.75)))
-    for i in range(int(face_height * 1.75)):
-        for j in range(int(face_width * 1.5)):
-            for k in range(3):
-                if ironman[i][j][k] < 235:
-                    fc[y + i - int(0.375 * h) - 1][x + j - int(0.25 * w)][k] = ironman[i][j][k]
+                    fc[y + i - int(0.3 * h) - 1][x + j + int(0.05 * w)][k] = spiderman[i][j][k]
     return fc
 
 def put_glasses_filter(glasses, fc, x, y, w, h):
     face_width = w
     face_height = h
 
-    glasses = cv2.resize(glasses, (int(face_width * 1.5), int(face_height * 1.75)))
-    for i in range(int(face_height * 1.75)):
-        for j in range(int(face_width * 1.5)):
+    glasses = cv2.resize(glasses, (int(face_width * 1), int(face_height * 0.4)))
+    for i in range(int(face_height * 0.4)):
+        for j in range(int(face_width * 1)):
             for k in range(3):
                 if glasses[i][j][k] < 235:
-                    fc[y + i - int(0.375 * h) - 1][x + j - int(0.25 * w)][k] = glasses[i][j][k]
+                    fc[y + i + int(0.25* h) - 1][x + j + int(0.005 * w)][k] = glasses[i][j][k]
+    return fc
+
+def put_hearts_filter(hearts, fc, x, y, w, h):
+    face_width = w
+    face_height = h
+
+    hearts = cv2.resize(hearts, (int(face_width * 1), int(face_height * 0.4)))
+    for i in range(int(face_height * 0.4)):
+        for j in range(int(face_width * 1)):
+            for k in range(3):
+                if hearts[i][j][k] < 235:
+                    fc[y + i + int(0.25* h) - 1][x + j + int(0.005 * w)][k] = hearts[i][j][k]
     return fc
 
 
@@ -160,15 +217,17 @@ while (1):
         # cv2.putText(frame,"Person Detected",(x,y),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),2)
 
         if ch == 2:
-            frame = put_cat_filter(cat, frame, x, y, w, h)
+            frame = put_cat_e_filter(cat_e, frame, x, y, w, h)
+            frame = put_cat_n_filter(cat_n, frame, x, y, w, h)
         elif ch == 1:
-            frame = put_dog_filter(dog, frame, x, y, w, h)
+            frame = put_hearts_filter(hearts, frame, x, y, w, h)
         elif ch == 3:
-            frame = put_ironman_filter(ironman, frame, x, y, w, h)
-        elif ch == 4:
             frame = put_spiderman_filter(spiderman, frame, x, y, w, h)
-        elif ch ==5:
+        elif ch == 4:
             frame = put_glasses_filter(glasses, frame, x, y, w, h)
+        elif ch ==5:
+            frame = put_dog_e_filter(dog_e, frame, x, y, w, h)
+            frame = put_dog_n_filter(dog_n, frame, x, y, w, h)
 
 
     if anterior != len(faces):
@@ -264,46 +323,51 @@ while (1):
         # print corresponding gestures which are in their ranges
         font = cv2.FONT_HERSHEY_SIMPLEX
 
-        cv2.putText(frame, '0.none 1.moustache  2.cowboy hat 3.2&3 4.dog', (0, 450), font, 0.6, (189, 186, 141), 1, cv2.LINE_AA)
+        cv2.putText(frame, '0.None 1.Hearts  2.Cat 3.Spider man 4.Glasses 5.Dog', (50, 450), font, 0.6, (255, 255, 255), 1, cv2.LINE_AA)
 
         if l == 1:
             if areacnt < 2000:
-                cv2.putText(frame, 'Put hand in the box!', (0, 50), font, 1.5, (189, 186, 141), 3, cv2.LINE_AA)
+                cv2.putText(frame, 'Put hand in the box!', (0, 70), font, 1.5, (255, 255, 255), 3, cv2.LINE_AA)
             else:
                 if arearatio < 12:
-                    cv2.putText(frame, '0', (145, 50), font, 2, (189, 186, 141), 3, cv2.LINE_AA)
+                    cv2.putText(frame, '0.None', (70, 70), font, 2, (255, 255, 255), 3, cv2.LINE_AA)
                     ch = 0
                 elif arearatio < 17.5:
-                    cv2.putText(frame, 'Best of luck', (0, 50), font, 1.5, (189, 186, 141), 3, cv2.LINE_AA)
+                    # cv2.putText(frame, 'Best of luck', (0, 50), font, 1.5, (189, 186, 141), 3, cv2.LINE_AA)
+                    cv2.putText(frame, '1.Hearts', (70, 70), font, 2, (255, 255, 255), 3, cv2.LINE_AA)
+                    ch = 1
 
                 else:
-                    cv2.putText(frame, '1', (140, 50), font, 2, (189, 186, 141), 3, cv2.LINE_AA)
+                    cv2.putText(frame, '1.Hearts', (70, 70), font, 2, (255, 255, 255), 3, cv2.LINE_AA)
                     ch = 1
 
         elif l == 2:
-            cv2.putText(frame, '2', (140, 50), font, 2, (189, 186, 141), 3, cv2.LINE_AA)
+            cv2.putText(frame, '2.Cat', (70, 70), font, 2, (255, 255, 255), 3, cv2.LINE_AA)
             ch = 2
 
         elif l == 3:
 
             if arearatio < 27:
-                cv2.putText(frame, '3', (140, 50), font, 2, (189, 186, 141), 3, cv2.LINE_AA)
+                cv2.putText(frame, '3.Spider man', (70, 70), font, 2, (255, 255, 255), 3, cv2.LINE_AA)
                 ch = 3
             else:
-                cv2.putText(frame, 'ok', (140, 50), font, 2, (189, 186, 141), 3, cv2.LINE_AA)
+                # cv2.putText(frame, 'ok', (140, 50), font, 2, (189, 186, 141), 3, cv2.LINE_AA)
+                cv2.putText(frame, '3.Spider man', (70, 70), font, 2, (255, 255, 255), 3, cv2.LINE_AA)
+                ch = 3
 
         elif l == 4:
-            cv2.putText(frame, '4', (140, 50), font, 2, (189, 186, 141), 3, cv2.LINE_AA)
+            cv2.putText(frame, '4.Glasses', (70, 70), font, 2, (255, 255, 255), 3, cv2.LINE_AA)
             ch = 4
 
         elif l == 5:
-            cv2.putText(frame, '5', (140, 50), font, 2, (189, 186, 141), 3, cv2.LINE_AA)
+            cv2.putText(frame, '5.Dog', (70, 70), font, 2, (255, 255, 255), 3, cv2.LINE_AA)
+            ch = 5
 
         elif l == 6:
-            cv2.putText(frame, 'reposition', (0, 50), font, 2, (189, 186, 141), 3, cv2.LINE_AA)
+            cv2.putText(frame, 'reposition!', (70, 70), font, 2, (255, 255, 255), 3, cv2.LINE_AA)
 
         else:
-            cv2.putText(frame, 'reposition', (0, 50), font, 2, (189, 186, 141), 3, cv2.LINE_AA)
+            cv2.putText(frame, 'reposition!', (700, 70), font, 2, (255, 255, 255), 3, cv2.LINE_AA)
 
         # show the windows
         cv2.imshow('mask', mask)
