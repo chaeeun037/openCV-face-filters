@@ -246,7 +246,7 @@ while (1):
         # define region of interest
         roi = frame[100:300, 50:250]
 
-        cv2.rectangle(frame, (50, 100), (250, 300), (189, 186, 141), 0)
+        cv2.rectangle(frame, (50, 100), (250, 300), (255, 255, 255), 0)
         hsv = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
 
         # define range of skin color in HSV
@@ -328,6 +328,7 @@ while (1):
         if l == 1:
             if areacnt < 2000:
                 cv2.putText(frame, 'Put hand in the box!', (0, 70), font, 1.5, (255, 255, 255), 3, cv2.LINE_AA)
+                ch = 0
             else:
                 if arearatio < 12:
                     cv2.putText(frame, '0.None', (70, 70), font, 2, (255, 255, 255), 3, cv2.LINE_AA)
