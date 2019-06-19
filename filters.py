@@ -22,8 +22,13 @@ video_capture = cv2.VideoCapture(0)
 anterior = 0
 mst = cv2.imread('moustache.png')
 hat = cv2.imread('cowboy_hat.png')
-dog = cv2.imread('dog_filter.png')
+dogFilter = cv2.imread('dog_filter.png')
 
+cat = cv2.imread('cat.png', 1)
+ironman = cv2.imread('ironman.png', 1)
+spiderman = cv2.imread('spiderman.png', 1)
+glasses = cv2.imread('glasses.png', 1)
+dog = cv2.imread('dog.png', 1)
 
 def put_moustache(mst, fc, x, y, w, h):
     face_width = w
@@ -60,6 +65,18 @@ def put_hat(hat, fc, x, y, w, h):
     return fc
 
 
+def put_dogFilter_filter(dogFilter, fc, x, y, w, h):
+    face_width = w
+    face_height = h
+
+    dog = cv2.resize(dogFilter, (int(face_width * 1.5), int(face_height * 1.75)))
+    for i in range(int(face_height * 1.75)):
+        for j in range(int(face_width * 1.5)):
+            for k in range(3):
+                if dog[i][j][k] < 235:
+                    fc[y + i - int(0.375 * h) - 1][x + j - int(0.25 * w)][k] = dog[i][j][k]
+    return fc
+
 def put_dog_filter(dog, fc, x, y, w, h):
     face_width = w
     face_height = h
@@ -70,6 +87,54 @@ def put_dog_filter(dog, fc, x, y, w, h):
             for k in range(3):
                 if dog[i][j][k] < 235:
                     fc[y + i - int(0.375 * h) - 1][x + j - int(0.25 * w)][k] = dog[i][j][k]
+    return fc
+
+def put_cat_filter(cat, fc, x, y, w, h):
+    face_width = w
+    face_height = h
+
+    cat = cv2.resize(cat, (int(face_width * 1.5), int(face_height * 1.75)))
+    for i in range(int(face_height * 1.75)):
+        for j in range(int(face_width * 1.5)):
+            for k in range(3):
+                if cat[i][j][k] < 235:
+                    fc[y + i - int(0.375 * h) - 1][x + j - int(0.25 * w)][k] = cat[i][j][k]
+    return fc
+
+def put_spiderman_filter(spiderman, fc, x, y, w, h):
+    face_width = w
+    face_height = h
+
+    spiderman = cv2.resize(spiderman, (int(face_width * 1.5), int(face_height * 1.75)))
+    for i in range(int(face_height * 1.75)):
+        for j in range(int(face_width * 1.5)):
+            for k in range(3):
+                if spiderman[i][j][k] < 235:
+                    fc[y + i - int(0.375 * h) - 1][x + j - int(0.25 * w)][k] = spiderman[i][j][k]
+    return fc
+
+def put_ironman_filter(ironman, fc, x, y, w, h):
+    face_width = w
+    face_height = h
+
+    ironman = cv2.resize(ironman, (int(face_width * 1.5), int(face_height * 1.75)))
+    for i in range(int(face_height * 1.75)):
+        for j in range(int(face_width * 1.5)):
+            for k in range(3):
+                if ironman[i][j][k] < 235:
+                    fc[y + i - int(0.375 * h) - 1][x + j - int(0.25 * w)][k] = ironman[i][j][k]
+    return fc
+
+def put_glasses_filter(glasses, fc, x, y, w, h):
+    face_width = w
+    face_height = h
+
+    glasses = cv2.resize(glasses, (int(face_width * 1.5), int(face_height * 1.75)))
+    for i in range(int(face_height * 1.75)):
+        for j in range(int(face_width * 1.5)):
+            for k in range(3):
+                if glasses[i][j][k] < 235:
+                    fc[y + i - int(0.375 * h) - 1][x + j - int(0.25 * w)][k] = glasses[i][j][k]
     return fc
 
 
@@ -95,14 +160,15 @@ while (1):
         # cv2.putText(frame,"Person Detected",(x,y),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),2)
 
         if ch == 2:
-            frame = put_moustache(mst, frame, x, y, w, h)
+            frame = put_cat_filter(cat, frame, x, y, w, h)
         elif ch == 1:
-            frame = put_hat(hat, frame, x, y, w, h)
-        elif ch == 3:
-            frame = put_moustache(mst, frame, x, y, w, h)
-            frame = put_hat(hat, frame, x, y, w, h)
-        elif ch == 4:
             frame = put_dog_filter(dog, frame, x, y, w, h)
+        elif ch == 3:
+            frame = put_ironman_filter(ironman, frame, x, y, w, h)
+        elif ch == 4:
+            frame = put_spiderman_filter(spiderman, frame, x, y, w, h)
+        elif ch ==5:
+            frame = put_glasses_filter(glasses, frame, x, y, w, h)
 
 
     if anterior != len(faces):
